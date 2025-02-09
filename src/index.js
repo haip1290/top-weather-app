@@ -9,7 +9,8 @@ btnSearch.addEventListener("click", () => {
   getWeatherData(location.value)
     .then((data) => {
       console.log("data ", data);
-      weatherDisplay.textContent = data;
+      const temp = data.currentConditions.temp;
+      weatherDisplay.textContent = `Temperature: ${temp}C`;
     })
     .catch((error) => console.log(error));
 });
