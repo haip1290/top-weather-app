@@ -32,6 +32,7 @@ const iconNameContainer = {
   sunny: "sunny_s_cloudy",
   clear: "sunny",
   "clear-day": "sunny",
+  snow: "snow",
 };
 
 function getConditionIcon(condition) {

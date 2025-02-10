@@ -49,7 +49,8 @@ function displayDescription(description) {
 
 function displayGif(conditions) {
   const gifDiv = document.querySelector(".gif");
-  getGif(conditions.split(" ").at(-1)).then((data) => (gifDiv.src = data));
+  const weather = conditions.split(" ").at(-1);
+  getGif(weather).then((data) => (gifDiv.src = data));
 }
 
 function displayDayWeather(days) {
