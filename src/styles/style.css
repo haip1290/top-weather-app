@@ -4,5 +4,51 @@
   padding: 0;
 }
 
-:root {
+.form-control {
+  padding: 1rem 2rem;
+}
+
+.header {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.h-location {
+  font-size: 2rem;
+  font-style: bold;
+}
+
+.weather-display {
+  width: 80vw;
+  margin: 1rem auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.temp {
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.temp-numb {
+  font-size: 3rem;
+}
+
+.temp-unit {
+  padding-top: 10px;
+}
+
+.description {
+}
+
+.days-container {
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+  display: flex;
+}
+
+.day-weather {
+  flex: 1;
 }
