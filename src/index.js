@@ -6,11 +6,17 @@ const location = document.querySelector("#searching-location");
 const btnSearch = document.querySelector(".btn-search");
 
 btnSearch.addEventListener("click", () => {
+  const loadingDisplay = document.querySelector(".loading-icon");
+  loadingDisplay.style.display = "block";
   getWeatherData(location.value)
     .then((data) => {
+      loadingDisplay.style.display = "none";
       displayWeather(data);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      loadingDisplay.style.display = "block";
+      console.log(error);
+    });
 });
 
 function displayWeather(data) {
