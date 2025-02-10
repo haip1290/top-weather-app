@@ -1,6 +1,6 @@
 import "./styles/style.css";
 import { getWeatherData } from "./weatherService";
-import { getGif } from "./gifService";
+import { getGif, getConditionIcon } from "./gifService";
 
 const location = document.querySelector("#searching-location");
 const btnSearch = document.querySelector(".btn-search");
@@ -8,7 +8,6 @@ const btnSearch = document.querySelector(".btn-search");
 btnSearch.addEventListener("click", () => {
   getWeatherData(location.value)
     .then((data) => {
-      console.log("data ", data);
       displayWeather(data);
     })
     .catch((error) => console.log(error));
@@ -16,7 +15,7 @@ btnSearch.addEventListener("click", () => {
 
 function displayWeather(data) {
   displayWeatherHeader(data.location);
-  displayTemp(data.temperature);
+  displayTemp(data.temperature, data.days[0].icon);
   displayDescription(data.description);
   displayGif(data.days[0].conditions);
   displayDayWeather(data.days);
@@ -32,7 +31,10 @@ function displayWeatherHeader(location) {
   headerDiv.appendChild(span);
 }
 
-function displayTemp(temperature) {
+function displayTemp(temperature, icon) {
+  const gifSpan = document.querySelector(".temp-gif");
+  gifSpan.src = getConditionIcon(icon);
+
   const tempSpan = document.querySelector(".temp-numb");
   tempSpan.textContent = temperature;
 
@@ -47,11 +49,12 @@ function displayDescription(description) {
 
 function displayGif(conditions) {
   const gifDiv = document.querySelector(".gif");
-  getGif(conditions).then((data) => (gifDiv.src = data));
+  getGif(conditions.split(" ").at(-1)).then((data) => (gifDiv.src = data));
 }
 
 function displayDayWeather(days) {
   const container = document.querySelector(".days-container");
+  container.textContent = "";
   days.forEach((day) => {
     const dayElement = buildDayElement(day);
     container.appendChild(dayElement);
@@ -66,6 +69,14 @@ function buildDayElement(data) {
   dateDiv.classList.add("date");
   dayDiv.appendChild(dateDiv);
   dateDiv.textContent = data.dayOfWeek;
+
+  const iconImg = document.createElement("img");
+  iconImg.src = getConditionIcon(data.icon);
+
+  const iconDiv = document.createElement("div");
+  iconDiv.classList.add("day-icon");
+  iconDiv.appendChild(iconImg);
+  dayDiv.appendChild(iconDiv);
 
   const dayTemp = document.createElement("div");
   dayDiv.appendChild(dayTemp);

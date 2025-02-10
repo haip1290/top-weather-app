@@ -3,14 +3,12 @@ const key = "qbVteMU0x15vSUNLLkKHYRWeJQkCwymH";
 
 async function getGif(searchWord) {
   const api = `${baseURL}?api_key=${key}&s=${searchWord}`;
-  console.log(api);
   try {
     const response = await fetch(api, { mode: "cors" });
     if (!response.ok) {
       handleError(response.status);
     }
     const data = await response.json();
-    console.log("data", data.data);
     return data.data.images.original.url;
   } catch (error) {
     console.log(error);
@@ -27,4 +25,19 @@ function handleError(status) {
   }
 }
 
-export { getGif };
+const iconNameContainer = {
+  "partly-cloudy-day": "partly_cloudy",
+  cloudy: "cloudy",
+  rain: "rain_s_cloudy",
+  sunny: "sunny_s_cloudy",
+  clear: "sunny",
+  "clear-day": "sunny",
+};
+
+function getConditionIcon(condition) {
+  const iconName = iconNameContainer[condition];
+  const icon = `https://ssl.gstatic.com/onebox/weather/64/${iconName}.png`;
+  return icon;
+}
+
+export { getGif, getConditionIcon };

@@ -15,7 +15,6 @@ async function getWeatherData(location) {
 }
 
 function mapAPIResponse(apiResponse) {
-  console.log("response: ", apiResponse);
   return {
     temperature: apiResponse.currentConditions?.temp ?? "N/A",
     location: apiResponse.resolvedAddress ?? "Unknown Location",
@@ -23,6 +22,7 @@ function mapAPIResponse(apiResponse) {
     days: apiResponse.days?.map((day) => ({
       datetime: day.datetime ?? "N/A",
       dayOfWeek: getDayOfWeek(day.datetime),
+      icon: day.icon,
       conditions: day.conditions,
       tempmax: day.tempmax ?? "N/A",
       tempmin: day.tempmin ?? "N/A",
@@ -32,7 +32,7 @@ function mapAPIResponse(apiResponse) {
 
 function getDayOfWeek(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", { weekday: "long" });
+  return date.toLocaleDateString("en-US", { weekday: "long" }).slice(0, 3);
 }
 
 export { getWeatherData };
